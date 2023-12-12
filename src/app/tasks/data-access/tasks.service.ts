@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Task } from '../interfaces/tasks';
 
 @Injectable({
@@ -6,7 +6,7 @@ import { Task } from '../interfaces/tasks';
 })
 export class TasksService {
   // # create a private property
-  #tasks  = signal<Task[]>([
+  #tasks = signal<Task[]>([
     {
       created_at: '1702334538172',
       id: '323f040e-03f0-400b-801f-85b2641a41k5',

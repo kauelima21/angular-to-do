@@ -13,6 +13,8 @@ import { Task } from './interfaces/tasks';
       <app-add-task (taskSubmitted)="addTask($event)" />
       <app-list-task
         [tasks]="tasks"
+        [totalTasksCount]="tasks.length"
+        [completedTasksCount]="getCompletedTasksCount(tasks)"
         (taskCompleted)="completeTask($event)"
         (taskRemoved)="removeTask($event)"
       />
@@ -34,7 +36,6 @@ export class TasksComponent implements OnInit {
 
   public getTasks() {
     this.tasks = this.tasksService.tasks();
-    console.log("get tasks", this.tasks)
     this.orderCompletedTasks();
   }
 
@@ -64,5 +65,12 @@ export class TasksComponent implements OnInit {
         return 0;
       }
     );
+  }
+
+  public getCompletedTasksCount(tasks: Task[]): number {
+    let completedTasks = tasks.filter(
+      task => task?.completed_at
+    );
+    return completedTasks.length;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, computed, signal } from '@angular/core';
 import { Task } from '../../interfaces/tasks';
 import { TaskItemComponent } from '../task-item/task-item.component';
 
@@ -11,11 +11,15 @@ import { TaskItemComponent } from '../task-item/task-item.component';
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2 text-sm">
           <p class="text-blue">Tarefas criadas</p>
-          <span class="rounded-full py-0.5 px-2 bg-gray-400 text-gray-100">0</span>
+          <span class="rounded-full py-0.5 px-2 bg-gray-400 text-gray-100">
+            {{ totalTasksCount }}
+          </span>
         </div>
         <div class="flex items-center gap-2 text-sm">
           <p class="text-purple">Concluídas</p>
-          <span class="rounded-full py-0.5 px-2 bg-gray-400 text-gray-100">0</span>
+          <span class="rounded-full py-0.5 px-2 bg-gray-400 text-gray-100">
+            {{ completedTasksCount }} de {{ totalTasksCount }}
+          </span>
         </div>
       </div>
       @for (task of tasks; track task.id) {
@@ -39,6 +43,8 @@ import { TaskItemComponent } from '../task-item/task-item.component';
 })
 export class ListTaskComponent {
   @Input({ required: true }) public tasks!: Task[];
+  @Input() public totalTasksCount!: number;
+  @Input() public completedTasksCount!: number;
   @Output() public taskCompleted = new EventEmitter<Task>();
   @Output() public taskRemoved = new EventEmitter<Task>();
 
