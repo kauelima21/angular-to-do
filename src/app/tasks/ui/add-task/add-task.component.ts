@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Task } from '../../interfaces/tasks';
 
 @Component({
   selector: 'app-add-task',
@@ -20,7 +21,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
       <button
         [disabled]="!taskForm.valid"
         type="submit"
-        class="flex items-center gap-2 bg-blue-dark transition-all duration-300 p-4 rounded-lg text-gray-100 hover:bg-blue"
+        class="flex items-center gap-2 cursor-pointer bg-blue-dark transition-all duration-300 p-4 rounded-lg text-gray-100 hover:bg-blue"
       >
         <span class="text-sm">Criar</span>
         <i class="ph ph-plus-circle"></i>
@@ -30,12 +31,13 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
   styles: ``
 })
 export class AddTaskComponent {
-  @Output() taskSubmitted = new EventEmitter();
+  @Output() taskSubmitted = new EventEmitter<Task>();
 
   private fb = inject(FormBuilder);
 
   public taskForm = this.fb.nonNullable.group({
     title: ['', Validators.required],
+    user_id: 'my-user',
   });
 
   public sendData(): void {
